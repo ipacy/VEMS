@@ -31,21 +31,7 @@ namespace VEMS.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyIdentityTableConfiguration();
-
-            //------------------Exam & Questions --------------------------//
-
-            modelBuilder.Entity<ExamQuestion>()
-                 .HasKey(eq => new { eq.ExamId, eq.QuestionId });
-
-            modelBuilder.Entity<ExamQuestion>()
-               .HasOne(ex => ex.Exam)
-               .WithMany(eq => eq.ExamQuestions)
-               .HasForeignKey(ex => ex.ExamId);
-
-            modelBuilder.Entity<ExamQuestion>()
-                .HasOne(qu => qu.Question)
-                .WithMany(eq => eq.ExamQuestions)
-                .HasForeignKey(qu => qu.QuestionId);
+            modelBuilder.ApplyBuilderConfiguration();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
